@@ -1,6 +1,9 @@
+import { ClockBasicDemo } from '@/components/widget/clock.demo'
 import { LinkBasicDemo } from '@/components/widget/link.demo'
+import { ListBasicDemo } from '@/components/widget/list.demo'
 import { RssBasicDemo } from '@/components/widget/rss.demo'
-
+import { TabsDemo } from '@/components/widget/tabs-demo'
+import { WaterCounterBasicDemo } from '@/components/widget/water-counter.demo'
 
 export default function () {
   return (
@@ -8,6 +11,10 @@ export default function () {
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
         <LinkBasicDemo />
         <RssBasicDemo />
+        <ListBasicDemo />
+        <ClockBasicDemo />
+        <WaterCounterBasicDemo />
+        <TabsDemo />
       </main>
     </div>
   )

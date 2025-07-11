@@ -2,6 +2,13 @@
 
 import type { Feed, WidgetLayout } from '@/types/widget'
 import { useEffect, useState } from 'react'
+import Parser from 'rss-parser'
+
+const parser = new Parser({
+  customFields: {
+    item: ['content:encoded', 'content']
+  }
+})
 
 async function fetchRSS(url: string) {
   try {
@@ -20,7 +27,7 @@ async function fetchRSS(url: string) {
         title: item.title,
         link: item.link,
         content: item.content || item.description,
-        contentSnippet: item.description?.replace(/<[^>]*>/g, '').substring(0, 100) + '...' || '',
+        contentSnippet: item.description?.replace(/<[^>]*>/g, '') || '',
         guid: item.guid || item.link,
         pubDate: item.pubDate
       }))
@@ -29,7 +36,7 @@ async function fetchRSS(url: string) {
     }
   } catch (error) {
     console.error('RSS fetch error:', error)
-    // 如果 rss2json.com 失败，尝试使用内部代理
+    // 如果 rss2json.com 失败，尝试使用内部代理和 rss-parser
     try {
       const proxyUrl = `/api/proxy?url=${encodeURIComponent(url)}`
       const response = await fetch(proxyUrl)
@@ -39,18 +46,15 @@ async function fetchRSS(url: string) {
       }
 
       const text = await response.text()
-      // 简单的 RSS 解析（这里只是示例，实际项目中建议使用专门的 RSS 解析库）
-      const parser = new DOMParser()
-      const doc = parser.parseFromString(text, 'text/xml')
-      const items = doc.querySelectorAll('item, entry')
+      const feed = await parser.parseString(text)
 
-      return Array.from(items).map((item, index) => ({
-        title: item.querySelector('title')?.textContent || `Item ${index + 1}`,
-        link: item.querySelector('link')?.textContent || item.querySelector('link')?.getAttribute('href') || '',
-        content: item.querySelector('description, content')?.textContent || '',
-        contentSnippet: item.querySelector('description, content')?.textContent?.replace(/<[^>]*>/g, '').substring(0, 100) + '...' || '',
-        guid: item.querySelector('guid')?.textContent || `item-${index}`,
-        pubDate: item.querySelector('pubDate, published')?.textContent || ''
+      return feed.items.map((item) => ({
+        title: item.title || 'Untitled',
+        link: item.link || '',
+        content: item['content:encoded'] || item.content || item.contentSnippet || '',
+        contentSnippet: (item.contentSnippet || item.content || '')?.replace(/<[^>]*>/g, '') || '',
+        guid: item.guid || item.link || '',
+        pubDate: item.pubDate || item.isoDate || ''
       }))
     } catch (proxyError) {
       console.error('Proxy RSS fetch error:', proxyError)
@@ -138,7 +142,7 @@ function Rss(props: WidgetLayout) {
                 >
                   <div className="truncate font-medium">{feed.title}</div>
                   {feed.contentSnippet && (
-                    <div className="truncate text-gray-500 mt-1">
+                    <div className="text-gray-500 mt-1 line-clamp-2 text-xs leading-relaxed">
                       {feed.contentSnippet}
                     </div>
                   )}
