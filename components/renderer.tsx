@@ -42,7 +42,14 @@ const UNIT_SIZE = 58
 const UNIT_GAP = 20
 const GRID_COLS = 8
 function renderer() {
-  const styles = items.reduce((acc, item, index) => {
+  const styles = items.reduce((acc: Array<{
+    width: number;
+    height: number;
+    transformX: number;
+    transformY: number;
+    gridX: number;
+    gridY: number;
+  }>, item) => {
     const { sizeX, sizeY } = item
     const width = sizeX * UNIT_SIZE + (sizeX - 1) * UNIT_GAP
     const height = sizeY * UNIT_SIZE + (sizeY - 1) * UNIT_GAP

@@ -1,4 +1,4 @@
-// 精简的代理 API 工具函数 - 只支持 GET 请求
+// 精简的代理 API 工具函数 - 支持 GET 和 POST 请求
 export class ProxyAPI {
   private baseUrl: string;
   private targetUrl: string;
@@ -14,10 +14,11 @@ export class ProxyAPI {
     this.apiKey = apiKey;
   }
 
-  private getHeaders(): HeadersInit {
+  private getHeaders(additionalHeaders?: Record<string, string>): HeadersInit {
     const headers: HeadersInit = {
       'Accept': 'application/json, text/plain, */*',
       'X-Proxy-Target': this.targetUrl,
+      ...additionalHeaders
     };
 
     if (this.apiKey) {
@@ -64,6 +65,26 @@ export class ProxyAPI {
     const response = await fetch(url.toString(), {
       method: 'GET',
       headers: this.getHeaders(),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+    }
+
+    return this.parseResponse(response);
+  }
+
+  // POST 请求
+  async post(path: string, body?: any, additionalHeaders?: Record<string, string>) {
+    const url = new URL(`${this.baseUrl}/${path}`, window.location.origin);
+
+    const headers = this.getHeaders(additionalHeaders);
+    
+    const response = await fetch(url.toString(), {
+      method: 'POST',
+      headers,
+      body: typeof body === 'string' ? body : JSON.stringify(body),
     });
 
     if (!response.ok) {
@@ -147,4 +168,5 @@ export class ProxyAPI {
 // 使用示例：
 // const proxyAPI = new ProxyAPI('https://api.example.com', 'your-api-key');
 // const data = await proxyAPI.get('users');
+// const postData = await proxyAPI.post('users', { name: 'John' });
 // const dataWithParams = await proxyAPI.get('users', { page: '1', limit: '10' });

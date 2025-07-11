@@ -1,10 +1,15 @@
-import type { LinkWidget } from '@/types/widget'
+import type { WidgetLayout } from '@/types/widget'
 
-function Link(props: LinkWidget) {
-  const { logo, title, height, width, dataSource } = props
+interface LinkProps extends WidgetLayout {
+  logo: string
+  url: string
+}
+
+function Link(props: LinkProps) {
+  const { logo, title, height, width, url } = props
 
   return (
-    <a target="_blank" href={dataSource} title={title}>
+    <a target="_blank" href={url} title={title}>
       <img src={logo} height={height} width={width} alt={title} />
     </a>
   )

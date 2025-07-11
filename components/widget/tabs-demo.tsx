@@ -120,7 +120,7 @@ function TabsDemo() {
             title="基础演示"
             width={12}
             height={6}
-            dataSource=""
+            dataSource={{ type: 'custom', url: '', refreshInterval: 60 }}
           />
         </div>
       </div>
@@ -136,7 +136,7 @@ function TabsDemo() {
             title="空状态演示"
             width={12}
             height={4}
-            dataSource=""
+            dataSource={{ type: 'custom', url: '', refreshInterval: 60 }}
           />
         </div>
       </div>
@@ -152,7 +152,7 @@ function TabsDemo() {
             title="单个标签演示"
             width={12}
             height={4}
-            dataSource=""
+            dataSource={{ type: 'custom', url: '', refreshInterval: 60 }}
           />
         </div>
       </div>

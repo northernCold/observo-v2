@@ -1,4 +1,3 @@
-
 import { WaterCounter } from './water-counter'
 
 export function WaterCounterBasicDemo() {
@@ -8,6 +7,9 @@ export function WaterCounterBasicDemo() {
         title="每日饮水目标"
         dailyGoal={2000}
         cupSize={200}
+        width={280}
+        height={320}
+        dataSource={{ type: 'static', data: null }}
       />
     </div>
   )
