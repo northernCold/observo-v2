@@ -64,7 +64,7 @@ export class WidgetDataProcessor {
    * 根据 widget 类型自动选择合适的处理方法
    */
   static async processWidgetData(
-    widgetType: 'list' | 'rss' | 'link' | 'clock' | 'water-counter',
+    widgetType: 'list' | 'rss' | 'link' | 'clock' | 'water-counter' | 'scroll',
     dataSource: DataSource | string | null
   ): Promise<any> {
     switch (widgetType) {
@@ -76,6 +76,7 @@ export class WidgetDataProcessor {
         return this.processLinkData(dataSource)
       case 'clock':
       case 'water-counter':
+      case 'scroll':
         // 这些组件不需要外部数据源
         return null
       default:

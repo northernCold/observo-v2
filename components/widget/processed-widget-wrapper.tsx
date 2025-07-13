@@ -7,7 +7,7 @@ import type { RSSItem, ListItem } from '@/lib/widget-data-service'
 
 // Hook-based approach for data processing
 export function useProcessedWidgetData(
-  widgetType: 'list' | 'rss' | 'link' | 'clock' | 'water-counter',
+  widgetType: 'list' | 'rss' | 'link' | 'clock' | 'water-counter' | 'scroll',
   dataSource: DataSource | string | null,
   options: { autoRefresh?: boolean; refreshInterval?: number } = {}
 ) {
@@ -30,8 +30,8 @@ export function useProcessedWidgetData(
   }, [])
 
   const fetchAndProcessData = useCallback(async () => {
-    // Clock 和 Water Counter 不需要数据处理
-    if (widgetType === 'clock' || widgetType === 'water-counter') {
+    // Clock、Water Counter 和 Scroll 不需要数据处理
+    if (widgetType === 'clock' || widgetType === 'water-counter' || widgetType === 'scroll') {
       setProcessedData(null)
       setLoading(false)
       setError(null)
@@ -58,7 +58,7 @@ export function useProcessedWidgetData(
 
   // 自动刷新
   useEffect(() => {
-    if (!autoRefresh || !refreshInterval || widgetType === 'clock' || widgetType === 'water-counter') {
+    if (!autoRefresh || !refreshInterval || widgetType === 'clock' || widgetType === 'water-counter' || widgetType === 'scroll') {
       return
     }
 
@@ -175,4 +175,9 @@ export function useProcessedLinkData(dataSource: DataSource | string | null) {
   }, [fetchData])
 
   return { data: processedData, refresh: fetchData }
+}
+
+// Hook for Scroll data (静态数据，不需要网络请求)
+export function useProcessedScrollData(items: Array<{ id: string; text: string; color?: string }>) {
+  return { data: items }
 }
