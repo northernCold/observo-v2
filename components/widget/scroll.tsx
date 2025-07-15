@@ -16,7 +16,7 @@ function Scroll(props: ScrollProps) {
     children,
     direction = 'horizontal',
     className,
-    showScrollbar = false
+    showScrollbar = true
   } = props
 
   return (
