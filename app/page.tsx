@@ -20,10 +20,23 @@ const widgetConfigs = [
     }
   },
   {
-    type: 'container' as const,
+    type: 'resizable-container' as const,
     props: {
-      title: '容器组件',
-      variant: 'glass'
+      background: 'glass',
+      shadow: 'medium',
+      padding: 'comfortable',
+      initialWidth: 240,
+      initialHeight: 160,
+      minWidth: 150,
+      minHeight: 100,
+      children: (
+        <div className="h-full w-full flex flex-col justify-center items-center">
+          <div className="text-lg font-semibold mb-2">可调整容器</div>
+          <div className="text-sm text-gray-600 text-center">
+            拖拽边缘调整大小
+          </div>
+        </div>
+      )
     }
   },
   {

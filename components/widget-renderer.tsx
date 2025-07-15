@@ -2,6 +2,7 @@ import React from "react";
 import { Clock } from "@/components/widget/clock";
 import { UniversalWidget } from "@/components/widget/universal";
 import { Container } from "@/components/widget/container";
+import { ResizableContainer } from "@/components/widget/resizable-container";
 import { Link } from "@/components/widget/link";
 import { Rss } from "@/components/widget/rss";
 import { Tabs } from "@/components/widget/tabs";
@@ -15,6 +16,7 @@ interface WidgetConfig {
     | "clock"
     | "universal"
     | "container"
+    | "resizable-container"
     | "link"
     | "rss"
     | "tabs"
@@ -43,6 +45,7 @@ export function Widget({ config, style }: WidgetProps) {
     clock: Clock,
     universal: UniversalWidget,
     container: Container,
+    "resizable-container": ResizableContainer,
     link: Link,
     rss: Rss,
     tabs: Tabs,
