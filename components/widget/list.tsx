@@ -35,9 +35,6 @@ function List(props: ListProps) {
   return (
     <div className="h-full w-full p-2">
       <div className="h-full w-full">
-        <h3 className="text-sm font-medium mb-2 truncate" title={title}>
-          {title}
-        </h3>
         <ul className={cn(listVariants({ listType }))}>
           {items.length > 0 ? (
             items.map((item) => (

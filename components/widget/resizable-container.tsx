@@ -38,20 +38,12 @@ const resizableContainerVariants = cva(
         floating: "shadow-2xl shadow-black/15",
       },
       // 内边距 - iOS 标准间距
-      padding: {
-        none: "p-0",
-        tight: "p-2",
-        cozy: "p-3",
-        comfortable: "p-4",
-        spacious: "p-6",
-        loose: "p-8",
-      },
+    
     },
     defaultVariants: {
       background: "primary",
       border: "light",
       shadow: "soft",
-      padding: "comfortable",
     },
   }
 )
@@ -82,7 +74,6 @@ export function ResizableContainer({
   background,
   border,
   shadow,
-  padding,
   initialWidth = 300,
   initialHeight = 200,
   minWidth = 100,
@@ -219,7 +210,6 @@ export function ResizableContainer({
           background,
           border,
           shadow,
-          padding,
         }),
         "select-none",
         className

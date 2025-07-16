@@ -1,6 +1,8 @@
 "use client"
 
 import { Tabs } from './tabs'
+import { ResizableContainer } from './resizable-container'
+import { Scroll } from './scroll'
 import type { TabItem } from './tabs'
 
 function TabsDemo() {
@@ -157,6 +159,96 @@ function TabsDemo() {
         </div>
       </div>
     </div>
+  )
+}
+
+export function ResizableDemo() {
+  const sampleTabs: TabItem[] = [
+    {
+      id: 'overview',
+      title: '概览',
+      component: (
+        <div className="p-4 h-full">
+          <h3 className="text-lg font-semibold mb-4">系统概览</h3>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="bg-blue-50 p-3 rounded">
+              <div className="text-2xl font-bold text-blue-600">1,234</div>
+              <div className="text-sm text-gray-600">总用户数</div>
+            </div>
+            <div className="bg-green-50 p-3 rounded">
+              <div className="text-2xl font-bold text-green-600">89.5%</div>
+              <div className="text-sm text-gray-600">系统正常率</div>
+            </div>
+          </div>
+        </div>
+      )
+    },
+    {
+      id: 'metrics',
+      title: '指标监控',
+      component: (
+        <div className="p-4 h-full">
+          <h3 className="text-lg font-semibold mb-4">性能指标</h3>
+          <div className="space-y-3">
+            <div className="flex justify-between items-center">
+              <span className="text-sm">CPU 使用率</span>
+              <div className="w-32 bg-gray-200 rounded-full h-2">
+                <div className="bg-blue-600 h-2 rounded-full" style={{ width: '45%' }}></div>
+              </div>
+              <span className="text-sm">45%</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm">内存使用率</span>
+              <div className="w-32 bg-gray-200 rounded-full h-2">
+                <div className="bg-green-600 h-2 rounded-full" style={{ width: '67%' }}></div>
+              </div>
+              <span className="text-sm">67%</span>
+            </div>
+          </div>
+        </div>
+      )
+    },
+    {
+      id: 'alerts',
+      title: '告警信息',
+      component: (
+        <div className="p-4 h-full">
+          <h3 className="text-lg font-semibold mb-4">最新告警</h3>
+          <div className="space-y-2">
+            <div className="flex items-center space-x-2 p-2 bg-red-50 rounded">
+              <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+              <span className="text-sm">高 CPU 使用率警告</span>
+            </div>
+            <div className="flex items-center space-x-2 p-2 bg-yellow-50 rounded">
+              <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+              <span className="text-sm">磁盘空间不足</span>
+            </div>
+          </div>
+        </div>
+      )
+    }
+  ]
+
+  return (
+    <ResizableContainer 
+      background="primary" 
+      shadow="soft" 
+      padding="comfortable"
+      initialWidth={500}
+      initialHeight={350}
+      minWidth={400}
+      minHeight={280}
+    >
+      <Scroll>
+        <Tabs 
+          tabs={sampleTabs} 
+          title="可调整大小的标签组件"
+          width={500}
+          height={350}
+          dataSource={{ type: 'custom', url: '', refreshInterval: 60 }}
+        />
+      </Scroll>
+    </ResizableContainer>
   )
 }
 
