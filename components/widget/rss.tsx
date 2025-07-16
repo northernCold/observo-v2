@@ -1,9 +1,8 @@
 "use client"
 
-import type { WidgetLayout } from '@/types/widget'
 import type { RSSItem } from '@/lib/widget-data-service'
 
-interface RssProps extends WidgetLayout {
+interface RssProps   {
   feeds: RSSItem[]
 }
 
@@ -13,9 +12,6 @@ function Rss(props: RssProps) {
   return (
     <div className="h-full w-full p-2">
       <div className="h-full w-full">
-        <h3 className="text-sm font-medium mb-2 truncate" title={title}>
-          {title}
-        </h3>
         <ul className="h-full w-full overflow-auto scrollbar-hide space-y-1">
           {feeds.length > 0 ? (
             feeds.map((feed, index) => (
@@ -29,7 +25,7 @@ function Rss(props: RssProps) {
                 >
                   <div className="truncate font-medium">{feed.title}</div>
                   {feed.contentSnippet && (
-                    <div className="text-gray-500 mt-1 line-clamp-2 text-xs leading-relaxed">
+                    <div className="truncate text-gray-500 mt-1 line-clamp-2 text-xs leading-relaxed">
                       {feed.contentSnippet}
                     </div>
                   )}

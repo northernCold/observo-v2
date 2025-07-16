@@ -120,7 +120,7 @@ export function useProcessedRSSData(
 ) {
   const { autoRefresh = true, refreshInterval = 10 } = options
   const [processedData, setProcessedData] = useState<RSSItem[]>([])
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   const fetchData = useCallback(async () => {

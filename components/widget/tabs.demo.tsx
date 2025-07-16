@@ -161,7 +161,6 @@ function TabsDemo() {
     </div>
   )
 }
-
 export function ResizableDemo() {
   const sampleTabs: TabItem[] = [
     {
@@ -233,7 +232,6 @@ export function ResizableDemo() {
     <ResizableContainer 
       background="primary" 
       shadow="soft" 
-      padding="comfortable"
       initialWidth={500}
       initialHeight={350}
       minWidth={400}

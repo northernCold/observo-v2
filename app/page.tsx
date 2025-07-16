@@ -2,84 +2,13 @@ import { calculateGridStyles, type GridItem, type GridConfig } from '@/lib/grid-
 import { Widget } from '@/components/widget-renderer'
 
 // 定义 widget 配置数据
-const widgetConfigs = [
-  {
-    type: 'clock' as const,
-    props: {
-      title: '时钟'
-    }
-  },
-  {
-    type: 'universal' as const,
-    props: {
-      title: '通用列表',
-      items: [
-        { id: '1', title: '项目 1', content: '这是第一个项目' },
-        { id: '2', title: '项目 2', content: '这是第二个项目' }
-      ]
-    }
-  },
-  {
-    type: 'resizable-container' as const,
-    props: {
-      background: 'glass',
-      shadow: 'medium',
-      padding: 'comfortable',
-      initialWidth: 240,
-      initialHeight: 160,
-      minWidth: 150,
-      minHeight: 100,
-      children: (
-        <div className="h-full w-full flex flex-col justify-center items-center">
-          <div className="text-lg font-semibold mb-2">可调整容器</div>
-          <div className="text-sm text-gray-600 text-center">
-            拖拽边缘调整大小
-          </div>
-        </div>
-      )
-    }
-  },
-  {
-    type: 'water-counter' as const,
-    props: {
-      title: '水杯计数器'
-    }
-  },
-  {
-    type: 'clock' as const,
-    props: {
-      title: '时钟 2'
-    }
-  },
-  {
+const widgetConfigs = Array(9)
+  .fill(null)
+  .map((_, index) => ({
     type: 'list' as const,
-    props: {
-      title: '列表组件',
-      items: [
-        { id: '1', title: '列表项 1' },
-        { id: '2', title: '列表项 2' }
-      ]
-    }
-  },
-  {
-    type: 'clock' as const,
-    props: {
-      title: '时钟 3'
-    }
-  },
-  {
-    type: 'clock' as const,
-    props: {
-      title: '时钟 4'
-    }
-  },
-  {
-    type: 'clock' as const,
-    props: {
-      title: '时钟 5'
-    }
-  }
-]
+    title: '列表组件',
+    dataSource: 'https://jsonplaceholder.typicode.com/posts'
+  }))
 
 // Grid 布局配置
 const gridItems: GridItem[] = [
@@ -96,7 +25,7 @@ const gridItems: GridItem[] = [
 
 const gridConfig: GridConfig = {
   unitSize: 128,
-  unitGap: 20,
+  unitGap: 30,
   gridCols: 8,
   maxRows: 20
 }
@@ -108,11 +37,7 @@ export default function Home() {
   return (
     <div className="relative w-full h-screen bg-gray-50 p-4">
       {gridStyles.map((style, index) => (
-        <Widget
-          key={index}
-          config={widgetConfigs[index]}
-          style={style}
-        />
+        <Widget key={index} schema={widgetConfigs[index]} style={style} />
       ))}
     </div>
   )

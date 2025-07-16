@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { useProcessedRSSData } from './processed-widget-wrapper'
 import { Rss } from './rss'
@@ -24,8 +24,7 @@ function RssBasicDemo() {
         width={360}
         height={240}
         onRetry={refresh}
-        emptyMessage="暂无 RSS 内容"
-      >
+        emptyMessage="暂无 RSS 内容">
         <Rss
           title="RSS Feed"
           feeds={feeds}
@@ -39,36 +38,27 @@ function RssBasicDemo() {
 }
 
 export function ResizableDemo() {
-  const { data: feeds, loading, error, refresh } = useProcessedRSSData(
-    'http://www.ruanyifeng.com/blog/atom.xml',
-    {
-      autoRefresh: true,
-      refreshInterval: 10,
-    }
-  )
-
+  const url = 'https://cprss.s3.amazonaws.com/javascriptweekly.com.xml';
+  // const url = 'http://www.ruanyifeng.com/blog/atom.xml';
+  const {
+    data: feeds,
+    loading,
+    error,
+    refresh
+  } = useProcessedRSSData(url, {
+    autoRefresh: true,
+    refreshInterval: 10
+  })
   return (
-    <ResizableContainer 
-      background="primary" 
-      shadow="soft" 
-      padding="comfortable"
-      
-    >
+    <ResizableContainer background="primary" shadow="soft">
       <WidgetState
         loading={loading}
         error={error}
         empty={!loading && !error && feeds.length === 0}
         onRetry={refresh}
-        emptyMessage="暂无 RSS 内容"
-      >
+        emptyMessage="暂无 RSS 内容">
         <Scroll>
-          <Rss
-            title="RSS Feed"
-            feeds={feeds}
-            width={400}
-            height={300}
-            dataSource={{ type: 'custom', url: 'http://www.ruanyifeng.com/blog/atom.xml', refreshInterval: 60 }}
-          />
+          <Rss feeds={feeds} />
         </Scroll>
       </WidgetState>
     </ResizableContainer>
