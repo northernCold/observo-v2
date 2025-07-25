@@ -1,6 +1,6 @@
 export interface DataModel {
-  dataType: 'notion' | 'rss' | 'custom'
-  data: Record<string, unknown>[]
+  dataType: 'notion' | 'rss' | 'url' | 'custom'
+  items: Record<string, unknown>[]
 }
 
 export interface DataSourceAdapter {

@@ -19,7 +19,7 @@ export class RssAdapter implements DataSourceAdapter {
 
       return {
         dataType: 'rss',
-        data: feed.items.map((item, index) => ({
+        items: feed.items.map((item, index) => ({
           id: item.guid || item.link || `rss-${index}`,
           title: item.title || 'Untitled',
           content: item['content:encoded'] || item.content || item.contentSnippet || '',
@@ -34,7 +34,7 @@ export class RssAdapter implements DataSourceAdapter {
 
     } catch (error) {
       console.error('Failed to fetch data from RSS:', error)
-      return { dataType: 'rss', data: [] }
+      return { dataType: 'rss', items: [] }
     }
   }
 }

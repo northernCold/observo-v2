@@ -24,3 +24,10 @@ link: text / image
 ## dataSource
 
 数据源: `用户输入` `Notion`
+
+
+## TODOLIST
+
+1. 新增 widgets， 如何处理新增 rss 组
+2. 拖动 widgets
+3. 新增表单，类型可以选择 tabs，
