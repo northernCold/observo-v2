@@ -4,6 +4,7 @@ import { Clock } from '@/components/widget/clock'
 import { List } from '@/components/widget/list'
 import { WaterCounter } from '@/components/widget/water-counter'
 import { Link } from '@/components/widget/link'
+import { Tabs } from '@/components/widget/tabs'
 
 interface WidgetPreviewProps {
   config: WidgetConfig
@@ -112,6 +113,48 @@ export function WidgetPreview({ config, data = [] }: WidgetPreviewProps) {
               headers: {},
               method: 'GET'
             }}
+          />
+        )
+      
+      case 'tabs':
+        // 为tabs类型创建更真实的预览
+        const tabItems = config.tabsConfig?.tabs.map(tab => ({
+          id: tab.id,
+          title: tab.title,
+          component: (
+            <div className="p-2 h-full">
+              <div className="text-xs text-gray-600 mb-2">
+                {tab.widget.type} 组件
+              </div>
+              <div className="text-xs text-gray-500">
+                数据源: {tab.widget.dataSource.source || '未配置'}
+              </div>
+            </div>
+          )
+        })) || [
+          {
+            id: 'demo-tab-1',
+            title: '示例标签 1',
+            component: (
+              <div className="p-2 h-full flex items-center justify-center text-xs text-gray-500">
+                请配置标签页内容
+              </div>
+            )
+          }
+        ]
+        
+        return (
+          <Tabs
+            title={config.name}
+            width={previewSize.width}
+            height={previewSize.height}
+            dataSource={{
+              type: 'custom',
+              url: '',
+              headers: {},
+              method: 'GET'
+            }}
+            tabs={tabItems}
           />
         )
       

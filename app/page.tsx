@@ -75,7 +75,9 @@ export default function Home() {
     title: config.name,
     dataSource: config.dataSource.source,
     fieldMapping: config.fieldMapping,
-    size: config.size
+    size: config.size,
+    // 添加tabs配置的转换
+    tabsConfig: config.tabsConfig
   })
 
   // 处理编辑 widget
@@ -144,6 +146,35 @@ export default function Home() {
         dataSource: { type: 'url', source: 'https://www.example.com' },
         fieldMapping: {},
         size: { width: 1, height: 1 }
+      },
+      tabs: {
+        name: '标签页组件',
+        type: 'tabs',
+        dataSource: { type: 'url', source: '' },
+        fieldMapping: {},
+        size: { width: 4, height: 4 },
+        tabsConfig: {
+          tabs: [
+            {
+              id: 'tab-1',
+              title: '新闻列表',
+              widget: {
+                type: 'list',
+                dataSource: 'https://jsonplaceholder.typicode.com/posts',
+                fieldMapping: { title: 'title', content: 'body', id: 'id' }
+              }
+            },
+            {
+              id: 'tab-2',
+              title: '时钟',
+              widget: {
+                type: 'clock',
+                dataSource: '',
+                fieldMapping: {}
+              }
+            }
+          ]
+        }
       }
     }
 

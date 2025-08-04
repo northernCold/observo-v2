@@ -115,6 +115,9 @@ export function WidgetContextMenu({
                 <ContextMenuItem onClick={() => handleQuickAdd('link')}>
                   链接组件
                 </ContextMenuItem>
+                <ContextMenuItem onClick={() => handleQuickAdd('tabs')}>
+                  标签页组件
+                </ContextMenuItem>
               </ContextMenuSubContent>
             </ContextMenuSub>
           </>

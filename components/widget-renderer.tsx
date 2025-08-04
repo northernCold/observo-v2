@@ -30,6 +30,24 @@ interface WidgetConfig {
     width: number
     height: number
   }
+  // tabs专用配置
+  tabsConfig?: {
+    tabs: {
+      id: string
+      title: string
+      widget: {
+        type: 'list' | 'rss' | 'link' | 'clock' | 'water-counter'
+        dataSource: string
+        fieldMapping?: {
+          title?: string
+          content?: string
+          link?: string
+          date?: string
+          id?: string
+        }
+      }
+    }[]
+  }
 }
 
 interface WidgetProps {
@@ -254,6 +272,81 @@ export function Widget({ schema, style }: WidgetProps) {
         )
       
       case 'tabs':
+        // 为tabs类型渲染配置的子组件
+        const tabItems = schema.tabsConfig?.tabs.map(tab => {
+          // 为每个tab创建对应的组件
+          let tabComponent;
+          
+          switch (tab.widget.type) {
+            case 'list':
+              tabComponent = (
+                <div className="h-full p-2">
+                  <div className="text-xs text-gray-600 mb-2">列表组件</div>
+                  <div className="space-y-1">
+                    <div className="text-xs">数据源: {tab.widget.dataSource}</div>
+                    {tab.widget.fieldMapping?.title && (
+                      <div className="text-xs text-gray-500">标题字段: {tab.widget.fieldMapping.title}</div>
+                    )}
+                  </div>
+                </div>
+              );
+              break;
+            case 'rss':
+              tabComponent = (
+                <div className="h-full p-2">
+                  <div className="text-xs text-gray-600 mb-2">RSS组件</div>
+                  <div className="text-xs">RSS源: {tab.widget.dataSource}</div>
+                </div>
+              );
+              break;
+            case 'clock':
+              tabComponent = (
+                <div className="h-full p-2 flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="text-lg font-mono">{new Date().toLocaleTimeString()}</div>
+                    <div className="text-xs text-gray-500">时钟组件</div>
+                  </div>
+                </div>
+              );
+              break;
+            case 'water-counter':
+              tabComponent = (
+                <div className="h-full p-2 flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="text-sm">💧 0/8</div>
+                    <div className="text-xs text-gray-500">饮水计数器</div>
+                  </div>
+                </div>
+              );
+              break;
+            case 'link':
+              tabComponent = (
+                <div className="h-full p-2 flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="text-sm">🔗</div>
+                    <div className="text-xs text-gray-500">链接组件</div>
+                    <div className="text-xs mt-1">{tab.widget.dataSource}</div>
+                  </div>
+                </div>
+              );
+              break;
+            default:
+              tabComponent = (
+                <div className="h-full p-2 flex items-center justify-center">
+                  <div className="text-xs text-gray-500">
+                    {tab.widget.type} 组件
+                  </div>
+                </div>
+              );
+          }
+          
+          return {
+            id: tab.id,
+            title: tab.title,
+            component: tabComponent
+          };
+        }) || [];
+        
         return (
           <Tabs
             title={title}
@@ -261,15 +354,11 @@ export function Widget({ schema, style }: WidgetProps) {
             height={style.height}
             dataSource={{
               type: 'custom',
-              url: schema.dataSource || '',
+              url: '',
               headers: {},
               method: 'GET'
             }}
-            tabs={data.map((item, index) => ({
-              id: item.id || `tab-${index}`,
-              title: item.title || `Tab ${index + 1}`,
-              component: <div className="p-2 text-xs">{item.content || JSON.stringify(item)}</div>
-            }))}
+            tabs={tabItems}
           />
         )
       
