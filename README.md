@@ -32,3 +32,4 @@ link: text / image
 2. 拖动 widgets
 3. 新增表单，类型可以选择 tabs，
 4. 数据获取优化, 避免页面刷新时,显示 "无数据", 然后获取到数据后, 再显示数据
+5. Google 登录 https://www.hemantasundaray.com/blog/implement-google-signin-nextjs-supabase-auth

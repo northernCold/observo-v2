@@ -4,7 +4,7 @@ import { Navigation } from "@/components/navigation";
 import "./globals.css";
 import "@radix-ui/themes/styles.css";
 import { Theme } from "@radix-ui/themes";
-
+import { Toaster } from "@/components/ui/sonner"
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -34,6 +34,7 @@ export default function RootLayout({
         <Theme>
           <main>{children}</main>
         </Theme>
+        <Toaster />
       </body>
     </html>
   );
