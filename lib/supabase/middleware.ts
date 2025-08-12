@@ -1,13 +1,11 @@
 import { NextResponse, type NextRequest } from "next/server"
 import { createServerClient } from "@supabase/ssr"
- 
 import { getUserRole } from "@/lib/get-user-role"
  
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
   })
- 
   // Create a Supabase client
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -37,9 +35,14 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
  
+  const { data: { session } } = await supabase.auth.getSession()
+  
+  // 注意：中间件中不能使用 React hooks 或客户端状态管理
+  // 用户状态应该在客户端组件中设置
+
   // Get the user's role using the custom getUserRole function
   const role = await getUserRole()
- 
+  
   // Redirect non-admin users trying to access admin pages to the home page
   if (
     user &&
